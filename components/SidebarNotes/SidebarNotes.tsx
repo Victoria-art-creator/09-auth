@@ -1,6 +1,6 @@
 import css from './SidebarNotes.module.css';
 import Link from 'next/link';
-import { fetchNotes } from '@/lib/api';
+import { fetchNotes } from '@/lib/api/clientApi';
 
 export default async function NotesSidebar() {
   const data = await fetchNotes('', 1, '');
