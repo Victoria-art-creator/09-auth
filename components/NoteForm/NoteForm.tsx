@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { useNoteDraftStore } from '@/lib/store/noteStore';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createNote } from '@/lib/api/clientApi';
 
 export default function NoteForm() {
   const router = useRouter();
@@ -22,23 +23,8 @@ export default function NoteForm() {
   };
 
   const createNoteMutation = useMutation({
-    mutationFn: async () => {
-      const response = await fetch(
-        'https://notehub-public.goit.study/api/notes',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-          },
-          body: JSON.stringify(draft),
-        },
-      );
+    mutationFn: () => createNote(draft),
 
-      if (!response.ok) {
-        throw new Error('Failed to create note');
-      }
-    },
     onSuccess: () => {
       toast.success('Note created');
       clearDraft();

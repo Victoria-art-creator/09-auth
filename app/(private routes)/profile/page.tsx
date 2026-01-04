@@ -42,18 +42,15 @@ const ProfilePage = async () => {
         <div className={css.avatarWrapper}>
           <Image
             src={user.avatar}
-            alt={user.userName}
+            alt={user.username}
             width={120}
             height={120}
             className={css.avatar}
           />
         </div>
         <div className={css.profileInfo}>
-          <p>Name: {user.userName}</p>
+          <p>Name: {user.username}</p>
           <p>Email: {user.email}</p>
-          <Link href="/profile/edit" className={css.editLink}>
-            Edit profile
-          </Link>
         </div>
       </div>
     </main>

@@ -23,13 +23,13 @@ export default function EditProfilePage() {
 
   useEffect(() => {
     if (user) {
-      setUsername(user.userName);
+      setUsername(user.username);
     }
   }, [user]);
 
   const { mutate, isPending } = useMutation({
     mutationFn: (payload: { username: string }) =>
-      updateMe({ userName: payload.username }),
+      updateMe({ username: payload.username }),
 
     onSuccess: (updatedUser: User) => {
       setUser(updatedUser);
@@ -62,7 +62,7 @@ export default function EditProfilePage() {
 
         <form className={css.profileInfo} onSubmit={handleSubmit}>
           <div className={css.usernameWrapper}>
-            <label htmlFor="username">Username: {user.userName}</label>
+            <label htmlFor="username">Username: {user.username}</label>
             <input
               id="username"
               type="text"
@@ -86,7 +86,7 @@ export default function EditProfilePage() {
             <button
               type="button"
               className={css.cancelButton}
-              onClick={() => router.push('/profile')}
+              onClick={() => router.back()}
             >
               Cancel
             </button>

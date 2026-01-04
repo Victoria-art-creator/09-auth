@@ -4,8 +4,10 @@ import css from './SignInPage.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { login, LoginRequest } from '@/lib/api/clientApi';
-import { ApiError } from '../../api/api';
 import { useAuthStore } from '@/lib/store/authStore';
+import { AxiosError } from 'axios';
+
+export type ApiError = AxiosError<{ error: string }>;
 
 const SignIn = () => {
   const router = useRouter();
@@ -61,7 +63,7 @@ const SignIn = () => {
 
         <div className={css.actions}>
           <button type="submit" className={css.submitButton}>
-            Register
+            Sign in
           </button>
         </div>
 

@@ -4,8 +4,10 @@ import css from './SignUpPage.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { register, RegisterRequest } from '@/lib/api/clientApi';
-import { ApiError } from '../../api/api';
 import { useAuthStore } from '@/lib/store/authStore';
+import { AxiosError } from 'axios';
+
+export type ApiError = AxiosError<{ error: string }>;
 
 const SignUp = () => {
   const router = useRouter();
@@ -37,17 +39,6 @@ const SignUp = () => {
     <main className={css.mainContent}>
       <h1 className={css.formTitle}>Sign up</h1>
       <form className={css.form} action={handleSubmit}>
-        <div className={css.formGroup}>
-          <label htmlFor="userName">Username</label>
-          <input
-            id="userName"
-            type="text"
-            name="userName"
-            className={css.input}
-            required
-          />
-        </div>
-
         <div className={css.formGroup}>
           <label htmlFor="email">Email</label>
           <input

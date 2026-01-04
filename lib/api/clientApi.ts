@@ -22,38 +22,37 @@ export const fetchNotes = async (
       ...(tag ? { tag } : {}),
     },
   });
-  // headers: {
-  //   Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-  // },
-  // });
 
   return response.data;
 };
 
+export type CreateNotePayload = {
+  title: string;
+  content?: string;
+  tag: string;
+};
+
+export const createNote = async (payload: CreateNotePayload): Promise<Note> => {
+  const { data } = await nextServer.post<Note>('/notes', payload);
+  return data;
+};
+
 export const deleteNote = async (noteId: string): Promise<Note> => {
   const response = await nextServer.delete<Note>(`/notes/${noteId}`);
-  //   , {
-  //   headers: {
-  //     Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-  //   },
-  // });
+
   return response.data;
 };
 
 export const fetchNoteById = async (id: string): Promise<Note> => {
   const response = await nextServer.get<Note>(`/notes/${id}`);
-  //   , {
-  //   headers: {
-  //     Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-  //   },
-  // });
+
   return response.data;
 };
 
 export type RegisterRequest = {
   email: string;
   password: string;
-  userName: string;
+  username: string;
 };
 
 export const register = async (data: RegisterRequest): Promise<User> => {
@@ -89,7 +88,12 @@ export const logout = async (): Promise<void> => {
   await nextServer.post('/auth/logout');
 };
 
-export async function updateMe(payload: Partial<User>): Promise<User> {
+export type UpdateUserPayload = {
+  username?: string;
+  avatar?: string;
+};
+
+export async function updateMe(payload: UpdateUserPayload): Promise<User> {
   const { data } = await nextServer.patch<User>('/users/me', payload);
   return data;
 }
