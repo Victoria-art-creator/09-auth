@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     title: 'Page NoteHub is not found',
     description:
       'This page does not exist. Go back to NoteHub to continue working with your notes',
-    url: 'https://08-zustand-khaki-nine.vercel.app/404',
+    url: 'https://09-auth-woad-nu.vercel.app/404',
     images: [
       {
         url: '/page_404.png',

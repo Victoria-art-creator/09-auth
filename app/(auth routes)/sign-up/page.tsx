@@ -5,10 +5,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { register, RegisterRequest } from '@/lib/api/clientApi';
 import { ApiError } from '../../api/api';
+import { useAuthStore } from '@/lib/store/authStore';
 
 const SignUp = () => {
   const router = useRouter();
   const [error, setError] = useState('');
+  const setUser = useAuthStore((state) => state.setUser);
 
   const handleSubmit = async (formData: FormData) => {
     try {
@@ -17,6 +19,7 @@ const SignUp = () => {
       const res = await register(formValues);
 
       if (res) {
+        setUser(res);
         router.push('/profile');
       } else {
         setError('Invalid email or password');
@@ -34,6 +37,17 @@ const SignUp = () => {
     <main className={css.mainContent}>
       <h1 className={css.formTitle}>Sign up</h1>
       <form className={css.form} action={handleSubmit}>
+        <div className={css.formGroup}>
+          <label htmlFor="userName">Username</label>
+          <input
+            id="userName"
+            type="text"
+            name="userName"
+            className={css.input}
+            required
+          />
+        </div>
+
         <div className={css.formGroup}>
           <label htmlFor="email">Email</label>
           <input

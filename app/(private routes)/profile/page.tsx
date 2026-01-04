@@ -1,6 +1,9 @@
 import { Metadata } from 'next';
 import css from './ProfilePage.module.css';
 import Image from 'next/image';
+import Link from 'next/link';
+import { getServerMe } from '@/lib/api/serverApi';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
   title: 'Profile Page - NoteHub',
@@ -8,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Profile Page - NoteHub',
     description: 'Profile page of NoteHub application',
-    url: 'https://08-zustand-khaki-nine.vercel.app',
+    url: 'https://09-auth-woad-nu.vercel.app/',
     images: [
       {
         url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
@@ -20,19 +23,27 @@ export const metadata: Metadata = {
   },
 };
 
-const ProfilePage = () => {
+const ProfilePage = async () => {
+  const user = await getServerMe();
+
+  if (!user) {
+    redirect('/sign-in');
+  }
+
   return (
     <main className={css.mainContent}>
       <div className={css.profileCard}>
         <div className={css.header}>
           <h1 className={css.formTitle}>Profile Page</h1>
-          <a href="#" className={css.editProfileButton}>
+          <Link href="/profile/edit" className={css.editProfileButton}>
             Edit Profile
-          </a>
+          </Link>
         </div>
         <div className={css.avatarWrapper}>
           <Image
-            src="{avatar}"
+            src={
+              user.avatar || 'https://ac.goit.global/fullstack/react/avatar.png'
+            }
             alt="User Avatar"
             width={120}
             height={120}
@@ -40,9 +51,13 @@ const ProfilePage = () => {
           />
         </div>
         <div className={css.profileInfo}>
-          <p>Username: your_username</p>
-          <p>Email: your_email@example.com</p>
+          <p>Name: {user.userName}</p>
+          <p>Email: {user.email}</p>
         </div>
+
+        {/* <button type="submit" className={css.editProfileButton}>
+          Edit profile
+        </button> */}
       </div>
     </main>
   );

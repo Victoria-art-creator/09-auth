@@ -24,8 +24,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const url =
     tag === 'all'
-      ? 'https://08-zustand-khaki-nine.vercel.app/notes/filter/all'
-      : `https://08-zustand-khaki-nine.vercel.app/notes/filter/${tag}`;
+      ? 'https://09-auth-woad-nu.vercel.app/notes/filter/all'
+      : `https://09-auth-woad-nu.vercel.app/notes/filter/${tag}`;
 
   return {
     title,
