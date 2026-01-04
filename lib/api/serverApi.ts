@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import User from '@/types/user';
+import type { User } from '@/types/user';
 import type { Note } from '@/types/note';
 import NoteHTTPResponse from './clientApi';
 // import { nextServer } from './api';

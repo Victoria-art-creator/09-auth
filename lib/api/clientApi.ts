@@ -1,4 +1,4 @@
-import User from '@/types/user';
+import type { User } from '@/types/user';
 import type { Note } from '../../types/note';
 import { nextServer } from './api';
 
@@ -21,29 +21,32 @@ export const fetchNotes = async (
       ...(search ? { search } : {}),
       ...(tag ? { tag } : {}),
     },
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-    },
   });
+  // headers: {
+  //   Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
+  // },
+  // });
 
   return response.data;
 };
 
 export const deleteNote = async (noteId: string): Promise<Note> => {
-  const response = await nextServer.delete<Note>(`/notes/${noteId}`, {
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-    },
-  });
+  const response = await nextServer.delete<Note>(`/notes/${noteId}`);
+  //   , {
+  //   headers: {
+  //     Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
+  //   },
+  // });
   return response.data;
 };
 
 export const fetchNoteById = async (id: string): Promise<Note> => {
-  const response = await nextServer.get<Note>(`/notes/${id}`, {
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-    },
-  });
+  const response = await nextServer.get<Note>(`/notes/${id}`);
+  //   , {
+  //   headers: {
+  //     Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
+  //   },
+  // });
   return response.data;
 };
 
@@ -54,10 +57,8 @@ export type RegisterRequest = {
 };
 
 export const register = async (data: RegisterRequest): Promise<User> => {
-  // const res = await nextServer.post<User>('/auth/register', data);
-  // return res.data;
-  const { data: user } = await nextServer.post('/auth/register', data);
-  return user;
+  const res = await nextServer.post<User>('/auth/register', data);
+  return res.data;
 };
 
 export type LoginRequest = {
@@ -66,10 +67,8 @@ export type LoginRequest = {
 };
 
 export const login = async (data: LoginRequest): Promise<User> => {
-  const { data: user } = await nextServer.post('/auth/login', data);
-  return user;
-  // const res = await nextServer.post<User>('/auth/login', data);
-  // return res.data;
+  const res = await nextServer.post<User>('/auth/login', data);
+  return res.data;
 };
 
 type CheckSessionRequest = {
@@ -82,10 +81,15 @@ export const checkSession = async (): Promise<boolean> => {
 };
 
 export const getMe = async (): Promise<User> => {
-  const { data } = await nextServer.get<User>('/auth/me');
+  const { data } = await nextServer.get<User>('/users/me');
   return data;
 };
 
-export const logout = async () => {
+export const logout = async (): Promise<void> => {
   await nextServer.post('/auth/logout');
 };
+
+export async function updateMe(payload: Partial<User>): Promise<User> {
+  const { data } = await nextServer.patch<User>('/users/me', payload);
+  return data;
+}

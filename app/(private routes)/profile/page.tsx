@@ -41,10 +41,8 @@ const ProfilePage = async () => {
         </div>
         <div className={css.avatarWrapper}>
           <Image
-            src={
-              user.avatar || 'https://ac.goit.global/fullstack/react/avatar.png'
-            }
-            alt="User Avatar"
+            src={user.avatar}
+            alt={user.userName}
             width={120}
             height={120}
             className={css.avatar}
@@ -53,11 +51,10 @@ const ProfilePage = async () => {
         <div className={css.profileInfo}>
           <p>Name: {user.userName}</p>
           <p>Email: {user.email}</p>
+          <Link href="/profile/edit" className={css.editLink}>
+            Edit profile
+          </Link>
         </div>
-
-        {/* <button type="submit" className={css.editProfileButton}>
-          Edit profile
-        </button> */}
       </div>
     </main>
   );
