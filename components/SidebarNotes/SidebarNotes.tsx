@@ -1,10 +1,9 @@
 import css from './SidebarNotes.module.css';
 import Link from 'next/link';
-import { fetchNotes } from '@/lib/api/clientApi';
+import { NoteTag } from '@/types/note';
 
 export default async function NotesSidebar() {
-  const data = await fetchNotes('', 1, '');
-  const tags = Array.from(new Set(data.notes.map((note) => note.tag)));
+  const tags: NoteTag[] = ['Todo', 'Work', 'Personal', 'Meeting', 'Shopping'];
 
   return (
     <ul className={css.menuList}>
